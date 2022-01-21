@@ -11,13 +11,9 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: async (req, file) => {
-      console.log("async folder and here's req");
-      //console.log(req);
       return "YelpCamp";
     },
     format: async (req, file) => {
-      console.log("async format and here's req");
-      //console.log(req);
       return "jpg";
     },
     //public_id: (req, file) => Math.random().toString(),
