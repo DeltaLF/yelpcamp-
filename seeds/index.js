@@ -6,7 +6,7 @@ const Campground = require("../models/campground");
 const cities = require("./cities");
 const { places, descriptors } = require("./seedHelpers");
 const axios = require("axios").default;
-const seedsCount = 30; // maximum is 30
+const seedsCount = 30; // maximum is 30 for unsplash requesting
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp");
 const db = mongoose.connection;

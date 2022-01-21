@@ -11,7 +11,6 @@ module.exports.createUser = async (req, res) => {
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) return next(err);
-      console.log(registeredUser);
       req.flash("success", "Sucessfully register! Welcomne to Yelp Cmap!");
       res.redirect("campgrounds");
     });
@@ -33,7 +32,6 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.renderLogout = (req, res) => {
-  console.log(req.user);
   req.logout();
   req.flash("success", "GoodBye!");
   res.redirect("/campgrounds");

@@ -70,14 +70,9 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use((req, res, next) => {
-  console.log("------))-----");
-  console.log(req.query);
-  //console.log(req.path, req.originalUrl);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  console.log("res.locals.success");
-  console.log(res.locals.success);
   next();
 });
 app.use("/", userRouter);
@@ -97,7 +92,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
   res.render("error", { err });
 });
-
-app.listen(3000, () => {
-  console.log("running on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`running on port ${port}`);
 });
