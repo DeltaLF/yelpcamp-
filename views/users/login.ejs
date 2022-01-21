@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container">
+  <div class="row">
+    <div class=" col-6 offset-3 ">
+      <div class="card">
+        <img class="card-img-top" src="https://res.cloudinary.com/dqvgxqgpk/image/upload/w_400/v1642310574/YelpCamp/ilb5s9hpgy1lswrjgmhe.jpg" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Login</h5>
+          <form action="/login" method="POST" class="validated-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="username">username</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="username"
+                  name="username"
+                  required
+                  autofocus
+                />
+                    <div class="valid-feedback">looks good!</div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">password</label>
+                        <input
+                          class="form-control"
+                          type="password"
+                          id="password"
+                          name="password"
+                          required
+                         
+                        />
+                        <div class="valid-feedback">looks good!</div>
+                        </div>
+                        <button class="btn btn-success btn-block">Login</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
