@@ -7,3 +7,14 @@
   width: 100%;
   height: 300px;
 }
+
+.icon-copyright {
+  font-size: 0.5rem;
+  display: inline;
+  color: white;
+  float: right;
+}
+.icon-copyright a {
+  color: inherit;
+  text-decoration: none;
+}
