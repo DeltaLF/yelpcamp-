@@ -1,11 +1,14 @@
 const Campground = require("../models/campground");
 const { cloudinary } = require("./../cloudinary");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const review = require("../models/review");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 module.exports.index = async (req, res, next) => {
-  const campgrounds = await Campground.find({}).populate("reviews");
+  const campgrounds = await Campground.find({})
+    .populate("reviews")
+    .populate("images");
   res.render("campgrounds/index", { campgrounds });
 };
 
@@ -21,7 +24,6 @@ module.exports.createCampground = async (req, res) => {
       limit: 1,
     })
     .send();
-
   const campground = new Campground(req.body.campground);
   campground.images = req.files.map((f) => ({
     url: f.path,
@@ -44,11 +46,19 @@ module.exports.showCampground = async (req, res) => {
       },
     })
     .populate("author");
+
+  let isCommented = false;
+  for (campgroundReview of campground.reviews) {
+    if (req.user && campgroundReview.author.username === req.user.username) {
+      isCommented = true;
+    }
+  }
+
   if (!campground) {
     req.flash("error", "Cannot find that campground!");
     return res.redirect("/campgrounds");
   }
-  res.render("campgrounds/show", { campground });
+  res.render("campgrounds/show", { campground, isCommented });
 };
 
 module.exports.renderEditForm = async (req, res) => {

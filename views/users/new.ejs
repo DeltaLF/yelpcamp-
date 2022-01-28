@@ -1,13 +1,12 @@
 <% layout('layouts/boilerplate') %>
-
 <div class="container">
   <div class="row justify-content-around">
     <div class=" col-lg-6 col-md-9  ">
       <div class="card">
         <img class="card-img-top" src="https://res.cloudinary.com/dqvgxqgpk/image/upload/w_400/v1642310574/YelpCamp/ilb5s9hpgy1lswrjgmhe.jpg" alt="">
         <div class="card-body">
-          <h5 class="card-title">Login</h5>
-          <form action="/users/login" method="POST" class="validated-form" novalidate>
+          <h5 class="card-title">Register</h5>
+          <form action="/users" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="username">username</label>
                 <input
@@ -16,8 +15,17 @@
                   id="username"
                   name="username"
                   required
-                  autofocus
                 />
+                <div class="valid-feedback">looks good!</div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">email</label>
+                    <input
+                      class="form-control"
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                    />
                     <div class="valid-feedback">looks good!</div>
                     <div class="mb-3">
                         <label class="form-label" for="password">password</label>
@@ -27,12 +35,23 @@
                           id="password"
                           name="password"
                           required
-                         
                         />
                         <div class="valid-feedback">looks good!</div>
                         </div>
-                        <button class="btn btn-success btn-block">Login</button>
+                        <div class="mb-3">
+                          <label for="image" class="form-label">Upload User Image</label>
+                          <input
+                            class="form-control"
+                            name="image"
+                            type="file"
+                            id="image"
+                            multiple
+                          />
+                        </div>
+                        <button class="btn btn-success btn-block">Register</button>
+                        
         </form>
+        
         </div>
       </div>
     </div>

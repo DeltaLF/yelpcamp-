@@ -13,11 +13,9 @@ router.post(
   catchAsync(reviews.createReview)
 );
 
-router.delete(
-  "/:reviewId",
-  isLoggedIn,
-  isReviewAuthor,
-  catchAsync(reviews.deleteReview)
-);
+router
+  .route("/:reviewId")
+  .delete(isLoggedIn, isReviewAuthor, catchAsync(reviews.deleteReview))
+  .put(isLoggedIn, isReviewAuthor, catchAsync(reviews.editReview));
 
 module.exports = router;

@@ -17,7 +17,16 @@ module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "you must be signed in");
-    return res.redirect("/login");
+    return res.redirect("/users/login");
+  }
+  next();
+};
+
+module.exports.isUser = async (req, res, next) => {
+  const { userId } = req.params;
+  if (!req.user._id.equals(userId)) {
+    req.flash("error", "wrong user!");
+    return res.redirect(`/users/${userId}`);
   }
   next();
 };

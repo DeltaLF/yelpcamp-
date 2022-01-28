@@ -1,7 +1,7 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <img src="/images/camp.png" height="40" width="50" alt="" />
-    <a class="navbar-brand px-2" href="#">YelpCamp</a>
+    <a class="navbar-brand px-2" href="/">YelpCamp</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,16 +15,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/">Home</a>
         <a class="nav-link" href="/campgrounds">Campgrounds</a>
         <a class="nav-link" href="/campgrounds/new">New Campground</a>
+        <a class="nav-link" href="/users">User List</a>
       </div>
       <div class="navbar-nav ms-auto">
         <% if(!currentUser){ %>
-        <a class="nav-link" href="/login">Login</a>
-        <a class="nav-link" href="/register">Register</a>
+        <a class="nav-link" href="/users/login">Login</a>
+        <a class="nav-link" href="/users/new">Register</a>
         <% }else{ %>
-        <a class="nav-link" href="/logout">Logout</a>
+        <a href="/users/<%=currentUser._id%>" class="nav-link">My page</a>
+        <a class="nav-link" href="/users/logout">Logout</a>
         <% } %>
       </div>
     </div>

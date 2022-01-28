@@ -20,7 +20,7 @@ const helmet = require("helmet");
 
 const MongoDBStore = require("connect-mongo");
 
-const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+const db_url = "mongodb://localhost:27017/yelp-camp"; //process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 mongoose.connect(db_url);
 
 const db = mongoose.connection;
@@ -76,7 +76,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-app.use("/", userRouter);
+app.use("/users", userRouter);
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewsRouter);
 

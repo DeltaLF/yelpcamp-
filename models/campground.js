@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Review = require("./review");
 const Schema = mongoose.Schema;
 const opts = { toJSON: { virtuals: true } };
+const { cloudinary } = require("./../cloudinary");
 
 const ImageSchema = mongoose.Schema({ url: String, filename: String });
 ImageSchema.virtual("thumbnail").get(function () {
@@ -34,14 +35,20 @@ CampgroundSchema.virtual("properties.popUpMarkup").get(function (e) {
 });
 
 CampgroundSchema.post("findOneAndDelete", async function (doc) {
+  try {
+    for (img of doc.images) {
+      cloudinary.uploader.destroy(img.filename, function (err, result) {
+        console.log("delete cloudinary error", err);
+        console.log("delete cloudinary result", result);
+      });
+    }
+  } catch (err) {
+    console.log("fail to destroy campground img in cloudinary");
+  }
+
   if (doc) {
     await Review.deleteMany({ _id: { $in: doc.reviews } });
   }
-
-  // for (id of doc.reviews) {
-  //   const res = await Review.findByIdAndDelete(id);
-  //   console.log(res);
-  // }
 });
 
 module.exports = mongoose.model("Campground", CampgroundSchema);
