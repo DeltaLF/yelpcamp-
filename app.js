@@ -71,7 +71,6 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use((req, res, next) => {
-  console.log(req.user);
   res.locals.currentUser = typeof req.user === "undefined" ? false : req.user;
   //res.locals.currentUser = req.user || null;
   res.locals.success = req.flash("success");
