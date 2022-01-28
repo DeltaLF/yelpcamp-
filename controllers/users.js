@@ -94,15 +94,12 @@ module.exports.deleteUser = async (req, res) => {
     path: "author",
     select: "_id",
   });
-  console.log("asfafs", req.user);
-  console.log("AAAAAAAAAAAAAAAAAll review", reviewsAll);
   const userReviews = reviewsAll.filter((review) =>
     review.author._id.equals(req.user._id)
   );
 
   for (userReview of userReviews) {
     let result = await Review.findByIdAndDelete(userReview._id);
-    console.log(result);
   }
   const campgroundAll = await Campground.find().populate({
     path: "author",
@@ -115,7 +112,6 @@ module.exports.deleteUser = async (req, res) => {
     await Campground.findByIdAndDelete(userCampground._id);
   }
   await User.findByIdAndDelete(req.user._id);
-  console.log(req.user.image);
   if (req.user.image) {
     try {
       cloudinary.uploader.destroy(user.image.filename, function (err, result) {
