@@ -67,9 +67,6 @@ passport.use(new LocalStrategy(User.authenticate())); // User.authenticate comes
 passport.serializeUser(User.serializeUser()); // how to store
 passport.deserializeUser(User.deserializeUser()); // how to unstore
 
-app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 app.use((req, res, next) => {
   console.log(req.user);
   res.locals.currentUser = typeof req.user === "undefined" ? false : req.user;
@@ -78,6 +75,11 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+app.engine("ejs", ejsMate);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 app.use("/users", userRouter);
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewsRouter);
