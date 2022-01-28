@@ -24,7 +24,9 @@
         <a class="nav-link" href="/users/login">Login</a>
         <a class="nav-link" href="/users/new">Register</a>
         <% }else{ %>
-        <a href="/users/<%=currentUser._id%>" class="nav-link">My page</a>
+        <a href="/users/<%=locals.currentUser._id%>" class="nav-link"
+          >My page</a
+        >
         <a class="nav-link" href="/users/logout">Logout</a>
         <% } %>
       </div>
