@@ -8,6 +8,7 @@ const upload = multer({ storage: storage });
 const users = require("./../controllers/users");
 const { isLoggedIn, isUser } = require("../middleware");
 
+router.get("/loginGoogle", passport.authenticate("google"));
 router.get("/new", users.renderNewUser);
 router.get("/logout", users.renderLogout);
 router.get("/:userId/edit", isLoggedIn, isUser, users.renderEditUser);

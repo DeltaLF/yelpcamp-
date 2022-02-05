@@ -13,6 +13,7 @@ const userRouter = require("./routes/users");
 const campgroundsRouter = require("./routes/campgrounds");
 const reviewsRouter = require("./routes/reviews");
 const passport = require("passport");
+const googleStrategy = require("passport-google-oidc");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -63,6 +64,18 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); // User.authenticate comes with passport
+passport.use(
+  new googleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/users/loginGoogle/redirect",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      console.log("add google login in progress");
+    }
+  )
+);
 
 passport.serializeUser(User.serializeUser()); // how to store
 passport.deserializeUser(User.deserializeUser()); // how to unstore
