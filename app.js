@@ -13,14 +13,8 @@ const userRouter = require("./routes/users");
 const campgroundsRouter = require("./routes/campgrounds");
 const reviewsRouter = require("./routes/reviews");
 const passport = require("passport");
-const googleStrategy = require("passport-google-oidc");
-const LocalStrategy = require("passport-local");
-const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-
-const MongoDBStore = require("connect-mongo");
-
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 mongoose.connect(db_url);
 
@@ -39,57 +33,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
-const secret = process.env.SECRET || "thisshouldbeabettersecret!";
-const sessionConfig = {
-  store: MongoDBStore.create({
-    mongoUrl: db_url,
-    secret,
-    touchAfter: 24 * 60 * 60,
-  }),
-  name: "session",
-  secret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    //secure:true,  // cookie only used in https
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in a week
-    magAge: 1000 * 60 * 60 * 24 * 7,
-  },
-};
-
+// session
+const sessionConfig = require("./config/session");
 app.use(session(sessionConfig));
 app.use(flash());
-
+// passport
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate())); // User.authenticate comes with passport
-passport.use(
-  new googleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/users/loginGoogle/redirect",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      console.log("add google login in progress");
-    }
-  )
-);
+require("./config/passport");
 
-passport.serializeUser(User.serializeUser()); // how to store
-passport.deserializeUser(User.deserializeUser()); // how to unstore
-
-app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 app.use((req, res, next) => {
-  res.locals.currentUser = typeof req.user === "undefined" ? false : req.user;
+  res.locals.currentUser = typeof req.user == "undefined" ? false : req.user;
   //res.locals.currentUser = req.user || null;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
+
+app.engine("ejs", ejsMate);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 app.use("/users", userRouter);
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewsRouter);

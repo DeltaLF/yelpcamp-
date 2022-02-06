@@ -122,7 +122,7 @@ module.exports.deleteUser = async (req, res) => {
       console.log("fail to destroy user img in cloudinary");
     }
   }
-
   req.flash("success", `Delete User ${req.user.username} sucessfully!`);
+  req.logout();
   res.redirect("/users");
 };
