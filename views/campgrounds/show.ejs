@@ -49,7 +49,7 @@
 
     <div class="card mb-3">
       <div class="card-body">
-        <h5 class="card-title"><%=campground.title%></h5>
+        <h5 class="card-title text-uppercase"><%=campground.title%></h5>
         <p class="card-text"><%=campground.description%></p>
       </div>
       <ul class="list-group list-group-flush">
@@ -76,7 +76,7 @@
         </form>
       </div>
       <% } %>
-      <div class="card-footer text-muted">2 days ago</div>
+      <div class="card-footer text-muted"><%= campground.time%></div>
     </div>
   </div>
   <div class="col-lg-6 col-md-10">
