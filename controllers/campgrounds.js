@@ -10,7 +10,6 @@ module.exports.index = async (req, res, next) => {
     .populate("reviews")
     .populate("author")
     .populate("images");
-  console.log(campgrounds);
   res.render("campgrounds/index", { campgrounds });
 };
 

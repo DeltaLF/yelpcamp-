@@ -30,6 +30,18 @@ const CampgroundSchema = new Schema(
   opts
 );
 
+CampgroundSchema.virtual("averageRating").get(function () {
+  if (this.reviews && this.reviews.length > 0) {
+    let rating = 0;
+    this.reviews.forEach((review) => {
+      rating = rating + review.rating / this.reviews.length;
+    });
+    return rating;
+  } else {
+    return 0;
+  }
+});
+
 CampgroundSchema.virtual("properties.popUpMarkup").get(function (e) {
   return `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>
   <p>${this.description.substring(0, 20)}...</p>`;
