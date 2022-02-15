@@ -29,9 +29,9 @@
             Rating: <%= campground.averageRating > 0 ? campground.averageRating
             : "No review" %>
           </p>
-          <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary"
-            >view</a
-          >
+          <div class="spcl-btn">
+            <span><a href="/campgrounds/<%= campground._id %>"></a></span>
+          </div>
         </div>
       </div>
     </div>
