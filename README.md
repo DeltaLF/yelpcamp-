@@ -1,6 +1,6 @@
 # yelpcamp
 
-Deployed on https://serene-eyrie-64689.herokuapp.com
+Deployed on https://yelp-camp-enz8.onrender.com/
 
 features:
 nodejs + expres + MongoDB Atlas+ ejs + bootstrap + passport(local,google login strategies) + mapbox  
